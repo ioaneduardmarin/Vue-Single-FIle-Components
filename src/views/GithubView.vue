@@ -34,6 +34,7 @@
       >
         <p>
           A avut loc o eroare in timpul cautarii.
+          Utilizatorul "{{ this.username }}" nu a fost gasit.
         </p>
       </notification-message>
     </div>
@@ -91,7 +92,6 @@ export default {
       } catch (err) {
         this.showProperNotification(false);
         this.usernames = this.removeInexistentUsername(this.usernames, this.username);
-        alert(`Utilizatorul "${this.username}" nu a fost gasit.`);
       }
       this.isButtonDisabled = false;
     },

@@ -4,7 +4,7 @@
     class="ui container"
   >
     <h1>GitHub Profiles</h1>
-    <div class="ui fluid action input">
+    <div class="ui fluid action input inputDiv">
       <input
         v-model="username"
         type="text"
@@ -19,14 +19,14 @@
         Search
       </button>
     </div>
-    <div class="ui cards">
+    <div class="ui cards cardsDiv">
       <GithubUserCard
         v-for="user in reversedUsers"
         :key="user"
         :user="user"
       />
     </div>
-    <div>
+    <div class="notificationDiv">
       <notification-message
         v-if="wasUserFound === false"
         type="error"
@@ -35,13 +35,6 @@
         <p>
           A avut loc o eroare in timpul cautarii.
         </p>
-      </notification-message>
-
-      <notification-message
-        v-if="wasUserFound === true"
-        header="Succes!"
-      >
-        <p>Utilizatorul a fost gasit.</p>
       </notification-message>
     </div>
   </div>
@@ -98,6 +91,7 @@ export default {
       } catch (err) {
         this.showProperNotification(false);
         this.usernames = this.removeInexistentUsername(this.usernames, this.username);
+        alert(`Utilizatorul "${this.username}" nu a fost gasit.`);
       }
       this.isButtonDisabled = false;
     },
@@ -110,3 +104,25 @@ export default {
   },
 };
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.inputDiv {
+  margin: 16px 0px 16px 0px;
+}
+
+.notificationDiv {
+  margin: 16px 0px 16px 0px;
+}
+
+.cardsDiv {
+  margin: 16px 0px 16px 0px;
+}
+</style>

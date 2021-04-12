@@ -33,8 +33,7 @@
         header="Eroare!"
       >
         <p>
-          A avut loc o eroare in timpul cautarii.
-          Utilizatorul "{{ this.username }}" nu a fost gasit.
+          {{ errorMessage }}
         </p>
       </notification-message>
     </div>
@@ -42,7 +41,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import GithubUserCard from '@/components/GithubUserCard.vue';
 import NotificationMessage from '@/components/NotificationMessage.vue';
 import axios from 'axios';
@@ -61,6 +59,7 @@ export default {
       isUsernameNullOrEmpty: false,
       isButtonDisabled: false,
       wasUserFound: null,
+      errorMessage: '',
     };
   },
   computed: {
@@ -90,6 +89,7 @@ export default {
         this.users.push(response.data);
         this.showProperNotification(true);
       } catch (err) {
+        this.throwProperErrorMessage(err);
         this.showProperNotification(false);
         this.usernames = this.removeInexistentUsername(this.usernames, this.username);
       }
@@ -100,6 +100,13 @@ export default {
     },
     showProperNotification(value) {
       this.wasUserFound = value;
+    },
+    throwProperErrorMessage(error) {
+      if (error.message.indexOf('404') !== -1) {
+        this.errorMessage = `Utilizatorul "${this.username}" nu a fost gasit.`;
+      } else {
+        this.errorMessage = 'A avut loc o eroare de retea.';
+      }
     },
   },
 };

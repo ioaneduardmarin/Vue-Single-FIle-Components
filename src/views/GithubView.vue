@@ -105,7 +105,7 @@ export default {
       if (error.message.indexOf('404') !== -1) {
         this.errorMessage = `Utilizatorul "${this.username}" nu a fost gasit.`;
       } else {
-        this.errorMessage = 'A avut loc o eroare de retea.';
+        this.errorMessage = error.message;
       }
     },
   },

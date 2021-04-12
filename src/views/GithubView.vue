@@ -1,49 +1,112 @@
 <template>
-  <div id="github-view" class="ui container">
+  <div
+    id="github-view"
+    class="ui container"
+  >
     <h1>GitHub Profiles</h1>
     <div class="ui fluid action input">
-  <input v-model="username" type="text" @change="inputValidation"  placeholder="Search...">
-  <div v-if="this.inputValidation === false" class="ui button">Pardon</div>
-  <div v-else class="ui button" @click="searchUser">Search</div>
-</div>
+      <input
+        v-model="username"
+        type="text"
+        placeholder="Search..."
+        @change="inputValidation"
+      >
+      <button
+        :disabled="isButtonDisabled"
+        class="ui button"
+        @click="searchUser"
+      >
+        Search
+      </button>
+    </div>
     <div class="ui cards">
-      <GithubUserCard v-for="user in users" :key="user" :user="user"></GithubUserCard>
+      <GithubUserCard
+        v-for="user in reversedUsers"
+        :key="user"
+        :user="user"
+      />
+    </div>
+    <div>
+      <notification-message
+        v-if="wasUserFound === false"
+        type="error"
+        header="Eroare!"
+      >
+        <p>
+          A avut loc o eroare in timpul cautarii.
+        </p>
+      </notification-message>
+
+      <notification-message
+        v-if="wasUserFound === true"
+        header="Succes!"
+      >
+        <p>Utilizatorul a fost gasit.</p>
+      </notification-message>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import GithubUserCard from '@/components/GithubUserCard.vue'
-import axios from 'axios'
+import GithubUserCard from '@/components/GithubUserCard.vue';
+import NotificationMessage from '@/components/NotificationMessage.vue';
+import axios from 'axios';
+
 export default {
-  name: 'githubView',
+  name: 'GithubView',
   components: {
-    GithubUserCard
+    GithubUserCard,
+    NotificationMessage,
   },
-  data: function () {
+  data() {
     return {
       users: [],
       usernames: [],
       username: '',
-      isUsernameNullOrEmpty: false
-    }
-  },
-  methods: {
-    searchUser: function () {
-      axios.get(`https://api.github.com/users/${this.username}`)
-        .then(response => {
-          this.users.push(response.data)
-        })
-    }
+      isUsernameNullOrEmpty: false,
+      isButtonDisabled: false,
+      wasUserFound: null,
+    };
   },
   computed: {
-    inputValidation: function () {
+    inputValidation() {
       if ((this.username.trim() || '') === '') {
-        return false
+        return false;
       }
-      return true
-    }
-  }
-}
+      return true;
+    },
+    reversedUsers() {
+      return this.users.slice(0).reverse();
+    },
+  },
+  methods: {
+    async searchUser() {
+      this.showProperNotification(null);
+      if (!this.inputValidation) {
+        return;
+      }
+      if (this.usernames.includes(this.username)) {
+        return;
+      }
+      this.usernames.push(this.username);
+      this.isButtonDisabled = true;
+      try {
+        const response = await axios.get(`https://api.github.com/users/${this.username}`);
+        this.users.push(response.data);
+        this.showProperNotification(true);
+      } catch (err) {
+        this.showProperNotification(false);
+        this.usernames = this.removeInexistentUsername(this.usernames, this.username);
+      }
+      this.isButtonDisabled = false;
+    },
+    removeInexistentUsername(array, value) {
+      return array.filter((username) => username !== value);
+    },
+    showProperNotification(value) {
+      this.wasUserFound = value;
+    },
+  },
+};
 </script>

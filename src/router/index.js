@@ -1,15 +1,15 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import githubView from '../views/GithubView.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import githubView from '../views/GithubView.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
     name: 'githubView',
-    component: githubView
-  }
+    component: githubView,
+  },
   // {
   //   path: '/about',
   //   name: 'About',
@@ -18,12 +18,12 @@ const routes = [
   //   // which is lazy-loaded when the route is visited.
   //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   // }
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

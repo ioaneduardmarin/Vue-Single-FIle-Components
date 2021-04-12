@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">GitHub Profiles</router-link> |
+      <router-link to="/">
+        GitHub Profiles
+      </router-link> |
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

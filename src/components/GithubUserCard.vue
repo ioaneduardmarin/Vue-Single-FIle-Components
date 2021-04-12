@@ -1,36 +1,39 @@
 <template>
   <div class="ui card">
-      <div class="image">
-        <img :src="user.avatar_url">
+    <div class="image">
+      <img :src="user.avatar_url">
+    </div>
+    <div class="content">
+      <a
+        :href="`https://github.com/${user.login}`"
+        class="header"
+      >{{ user.name }}</a>
+      <div class="meta">
+        <span class="date">Joined in {{ user.created_at }}</span>
       </div>
-      <div class="content">
-        <a :href="`https://github.com/${user.login}`" class="header">{{user.name}}</a>
-        <div class="meta">
-          <span class="date">Joined in {{user.created_at}}</span>
-        </div>
-        <div class="description">
-          {{user.bio}}
-        </div>
-      </div>
-      <div class="extra content">
-        <a :href="`https://github.com/${user.login}?tab=followers`">
-          <i class="user icon"></i>
-          {{user.followers}} Friends
-        </a>
+      <div class="description">
+        {{ user.bio }}
       </div>
     </div>
+    <div class="extra content">
+      <a :href="`https://github.com/${user.login}?tab=followers`">
+        <i class="user icon" />
+        {{ user.followers }} Friends
+      </a>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'github-user-card',
+  name: 'GithubUserCard',
   props: {
     user: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

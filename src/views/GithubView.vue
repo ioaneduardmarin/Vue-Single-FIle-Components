@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import GithubUserCard from '@/components/GithubUserCard.vue';
-import NotificationMessage from '@/components/NotificationMessage.vue';
 import axios from 'axios';
+import GithubUserCard from '../components/GithubUserCard.vue';
+import NotificationMessage from '../components/NotificationMessage.vue';
 
 export default {
   name: 'GithubView',
@@ -132,4 +132,40 @@ export default {
 .cardsDiv {
   margin: 16px 0px 16px 0px;
 }
+
+/* .fade-enter-active {
+ animation: fadeIn 0.5s;
+}
+
+.fade-leave-active {
+ animation: fadeOut 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}*/
 </style>

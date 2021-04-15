@@ -46,27 +46,11 @@ export default {
 </script>
 
 <style scoped>
-.fade-enter-active {
-transition: fadeIn .3s ease;
-}
-
 .fade-leave-active {
  transition: opacity 0;
 }
 
-.fade-enter, .fade-leave-to {
+ .fade-leave-to {
   opacity: 0;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 </style>

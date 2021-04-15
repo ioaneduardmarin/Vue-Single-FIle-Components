@@ -27,15 +27,17 @@
       />
     </div>
     <div class="notificationDiv">
-      <notification-message
-        v-if="wasUserFound === false"
-        type="error"
-        header="Eroare!"
-      >
-        <p>
-          {{ errorMessage }}
-        </p>
-      </notification-message>
+      <transition name="fade">
+        <notification-message
+          v-if="wasUserFound === false"
+          type="error"
+          header="Eroare!"
+        >
+          <p>
+            {{ errorMessage }}
+          </p>
+        </notification-message>
+      </transition>
     </div>
   </div>
 </template>
@@ -112,7 +114,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -133,15 +135,11 @@ export default {
   margin: 16px 0px 16px 0px;
 }
 
-/* .fade-enter-active {
+.fade-enter-active {
  animation: fadeIn 0.5s;
 }
 
-.fade-leave-active {
- animation: fadeOut 0.5s;
-}
-
-.fade-enter, .fade-leave-to {
+.fade-enter {
   opacity: 0;
 }
 
@@ -156,16 +154,4 @@ export default {
     opacity: 1;
   }
 }
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0;
-  }
-}*/
 </style>
